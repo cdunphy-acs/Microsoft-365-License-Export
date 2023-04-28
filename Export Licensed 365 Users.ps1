@@ -11,7 +11,7 @@ Import-Csv -Path ".\LicenseMaps.csv" | ForEach-Object {
 }
 
 # Get all the licensed users
-$licensedUsers = Get-MsolUser -All | Where-Object {$_.IsLicensed -eq $true}
+$licensedUsers = Get-MsolUser -All | Where-Object { $_.IsLicensed -eq $true }
 
 # Create an empty array to store the user information
 $userInfoArray = @()
@@ -35,7 +35,8 @@ foreach ($user in $licensedUsers) {
         if ($licenseNameMapping.ContainsKey($licenseParts[1])) {
             # Use the advertised name from the mapping
             $licenseList += $licenseNameMapping[$licenseParts[1]]
-        } else {
+        }
+        else {
             # Use the original license name if there is no mapping
             $licenseList += $licenseParts[1]
         }
@@ -75,7 +76,8 @@ foreach ($Sku in $AccountSku) {
     if ($licenseNameMapping.ContainsKey($skuParts[1])) {
         # Use the advertised name from the mapping
         $skuName = $licenseNameMapping[$skuParts[1]]
-    } else {
+    }
+    else {
         # Use the original SKU name if there is no mapping
         $skuName = $skuParts[1]
     }
@@ -89,8 +91,6 @@ foreach ($Sku in $AccountSku) {
     # Add the result to the array
     $orgLicenseCounts += $Result
 }
-
-
 
 # Export the user information and license totals to a CSV file in the current directory
 $userInfoArray | Export-Csv -Path ".\User Licenses.csv" -NoTypeInformation
