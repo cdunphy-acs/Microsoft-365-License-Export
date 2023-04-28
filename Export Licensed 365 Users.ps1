@@ -5,6 +5,7 @@
 Connect-MsolService
 
 # Read the license name mapping from a CSV file
+# This comes direct from Microsoft and you can put updated mappings in, just rename it or change the script
 $licenseNameMapping = @{}
 Import-Csv -Path ".\LicenseMaps.csv" | ForEach-Object {
     $licenseNameMapping[$_.String_Id] = $_.Product_Display_Name
