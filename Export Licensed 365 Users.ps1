@@ -1,8 +1,6 @@
 # Author: Chris Dunphy
-# Notes: Run this in PowerShell 5.1, the one built-in with Windows.
+# Notes: Run this in PowerShell 5.1, the one built-in with Windows. You need the MSOnline module installed in your PowerShell.
 
-# First, you need to connect to the MSOnline service
-Import-Module MSOnline
 # First, you need to connect to the MSOnline service
 Connect-MsolService
 
@@ -29,16 +27,23 @@ foreach ($user in $licensedUsers) {
     $licenseList = ""
     foreach ($license in $licenses) {
         # Split the license name into its parts and use the part after the colon
-        # This is necessary because AppRiver likes to put "appriver:" before the license names
+        # This is necessary because Microsoft likes to put colons before their licenses from a partner reseller
+        # TODO: Does this work if the licenses do not come from a reseller still?
         $licenseParts = $license -split ":"
-
+    
         # Check if there is a mapping for this license name
         if ($licenseNameMapping.ContainsKey($licenseParts[1])) {
             # Use the advertised name from the mapping
-            $licenseList += "$($licenseNameMapping[$licenseParts[1]]), "
+            $licenseList += $licenseNameMapping[$licenseParts[1]]
         } else {
             # Use the original license name if there is no mapping
-            $licenseList += "$($licenseParts[1]), "
+            $licenseList += $licenseParts[1]
+        }
+    
+        # Check if this is the last iteration of the loop
+        if ($license -ne $licenses[-1]) {
+            # Add a comma if this is not the last iteration
+            $licenseList += ", "
         }
     }
 
