@@ -35,10 +35,10 @@ foreach ($user in $licensedUsers) {
         # Check if there is a mapping for this license name
         if ($licenseNameMapping.ContainsKey($licenseParts[1])) {
             # Use the advertised name from the mapping
-            $licenseList += "$($licenseNameMapping[$licenseParts[1]]) "
+            $licenseList += "$($licenseNameMapping[$licenseParts[1]]), "
         } else {
             # Use the original license name if there is no mapping
-            $licenseList += "$($licenseParts[1]) "
+            $licenseList += "$($licenseParts[1]), "
         }
     }
 
